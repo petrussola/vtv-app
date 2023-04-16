@@ -8,9 +8,9 @@ class Age {
   String getAgeLabel() {
     switch (ageCohort) {
       case AgeCohort.gentJove:
-        return 'Gent jove';
+        return 'jove';
       case AgeCohort.gentGran:
-        return 'Gent gran';
+        return 'gran';
       default:
         throw Error;
     }

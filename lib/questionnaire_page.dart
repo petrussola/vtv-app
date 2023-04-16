@@ -8,13 +8,13 @@ class QuestionnairePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String title = age.getAgeLabel();
+    String ageLabel = age.getAgeLabel();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text('Modalitat $ageLabel'),
       ),
-      body: Text(title),
+      body: Text(ageLabel),
     );
   }
 }
