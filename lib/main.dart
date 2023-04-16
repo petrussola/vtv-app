@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vtv_app/datamodel.dart';
+import 'package:vtv_app/questionnaire_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'bla bla'),
+      home: const MyHomePage(title: 'VTV - Vilafranquins de Tota la Vida'),
     );
   }
 }
@@ -52,8 +53,8 @@ class MyHomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
-            const AgeButton(buttonText: Age.gentJove),
-            const AgeButton(buttonText: Age.gentGran),
+            AgeButton(selectedAge: Age(AgeCohort.gentJove)),
+            AgeButton(selectedAge: Age(AgeCohort.gentGran)),
           ],
         ),
       ),
@@ -62,23 +63,14 @@ class MyHomePage extends StatelessWidget {
 }
 
 class AgeButton extends StatelessWidget {
-  const AgeButton({super.key, required this.buttonText});
+  const AgeButton({super.key, required this.selectedAge});
 
-  final Age buttonText;
-
-  String getAgeLabel() {
-    switch (buttonText) {
-      case Age.gentJove:
-        return 'Gent jove';
-      case Age.gentGran:
-        return 'Gent gran';
-      default:
-        throw Error;
-    }
-  }
+  final Age selectedAge;
 
   @override
   Widget build(BuildContext context) {
+    String ageLabel = selectedAge.getAgeLabel();
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SizedBox(
@@ -87,11 +79,17 @@ class AgeButton extends StatelessWidget {
           style: ButtonStyle(
             elevation: MaterialStateProperty.all(8.0),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => QuestionnairePage(age: selectedAge)),
+            );
+          },
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              getAgeLabel(),
+              ageLabel,
               style: const TextStyle(fontSize: 32.0),
             ),
           ),
