@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "pregunta": "On era el Casal 2000?",
+    "respostes": [
+      "Muntanya de Sant Jaume",
+      "Muntanta de St. Pau",
+      "Pi de la Serreta"
+    ],
+    "correcte": "Muntanya de Sant Jaume"
+  },
+  {
+    "id": 2,
+    "pregunta": "On es troba Cal Catantingues?",
+    "respostes": ["A la Barceloneta", "Al Poble Nou", "Ctra. de Vilanova"],
+    "correcte": "Ctra. de Vilanova"
+  },
+  {
+    "id": 3,
+    "pregunta": "Que hi havia a Cal Pepitu Jerri?",
+    "respostes": ["Una botiga de menjar", "Una fonda", "Una carnisseria"],
+    "correcte": "Una fonda"
+  },
+  {
+    "id": 4,
+    "pregunta": "Quin era el producte estrella del Bar Esteve?",
+    "respostes": ["Les patates", "La cervesa", "Els berberetxos"],
+    "correcte": "Els berberetxos"
+  },
+  {
+    "id": 5,
+    "pregunta": "Que hi ha ara a l'antic mercat de gallines i menuts?",
+    "respostes": ["La Casa de la Festa Major", "El Banc Sabadell", "Una plaça"],
+    "correcte": "La Casa de la Festa Major"
+  }
+]

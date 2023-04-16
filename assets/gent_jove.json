@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "pregunta": "Puix per nostre protector el cel volgué...",
+    "respostes": ["destinar-vos", "explicar-vos", "dirigir-vos"],
+    "indexCorrecte": 0
+  },
+  {
+    "id": 2,
+    "pregunta": "Com es deia el Carrer de Cal Bolet abans?",
+    "respostes": ["Duc de la Victoria", "Melió", "Ponent"],
+    "indexCorrecte": 0
+  },
+  {
+    "id": 3,
+    "pregunta": "Quin dia d'agost comencen els Goigs de St. Felix?",
+    "respostes": ["21", "22", "23"],
+    "indexCorrecte": 1
+  },
+  {
+    "id": 4,
+    "pregunta": "On estava el Discofilm?",
+    "respostes": ["Pl. Jaume I", "C/ Cort", "La Parellada"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 5,
+    "pregunta": "Com es deia el Casal Okupa de la Crta Vilanova?",
+    "respostes": ["Kasal Alternatiu", "Can Cellerot", "Okupa Vilafranca"],
+    "indexCorrecte": 1
+  }
+]
