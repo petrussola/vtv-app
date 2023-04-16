@@ -1,0 +1,1 @@
+enum Age {gentJove, gentGran}

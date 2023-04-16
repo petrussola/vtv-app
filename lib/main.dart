@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vtv_app/datamodel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,8 +52,8 @@ class MyHomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
-            const AgeButton(buttonText: 'Gent jove'),
-            const AgeButton(buttonText: 'Gent gran'),
+            const AgeButton(buttonText: Age.gentJove),
+            const AgeButton(buttonText: Age.gentGran),
           ],
         ),
       ),
@@ -63,7 +64,18 @@ class MyHomePage extends StatelessWidget {
 class AgeButton extends StatelessWidget {
   const AgeButton({super.key, required this.buttonText});
 
-  final String buttonText;
+  final Age buttonText;
+
+  String getAgeLabel() {
+    switch (buttonText) {
+      case Age.gentJove:
+        return 'Gent jove';
+      case Age.gentGran:
+        return 'Gent gran';
+      default:
+        throw Error;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +91,7 @@ class AgeButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              buttonText,
+              getAgeLabel(),
               style: const TextStyle(fontSize: 32.0),
             ),
           ),
