@@ -5,6 +5,10 @@ class Age {
 
   Age(this.ageCohort);
 
+  AgeCohort getAgeCohort() {
+    return ageCohort;
+  }
+
   String getAgeLabel() {
     switch (ageCohort) {
       case AgeCohort.gentJove:
@@ -18,17 +22,17 @@ class Age {
 }
 
 class Question {
+  Question(this.id, this.pregunta, this.respostes, this.indexCorrecte);
+
   late int id;
   late String pregunta;
-  late List<String> respostes;
+  late List respostes;
   late int indexCorrecte;
-
-  Question(this.id, this.pregunta, this.respostes, this.indexCorrecte);
 
   Question.fromJson(Map<String, dynamic> json) {
     id = json['id'] as int;
     pregunta = json['pregunta'] as String;
-    respostes = json['respostes'] as List<String>;
+    respostes = json['respostes'] as List;
     indexCorrecte = json['indexCorrecte'] as int;
   }
 }

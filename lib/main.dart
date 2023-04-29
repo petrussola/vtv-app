@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vtv_app/app_state.dart';
 import 'package:vtv_app/datamodel.dart';
-import 'package:vtv_app/questionnaire_page.dart';
+import 'package:vtv_app/pregunta_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +13,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Vilafranquins de tota la vida - the app',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider(
+      create: (context) => AppState(),
+      child: MaterialApp(
+        title: 'Vilafranquins de tota la vida - the app',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'VTV - Vilafranquins de Tota la Vida'),
       ),
-      home: const MyHomePage(title: 'VTV - Vilafranquins de Tota la Vida'),
     );
   }
 }
@@ -42,7 +47,7 @@ class MyHomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 32.0, bottom: 64.0),
               child: Text(
-                'Benvinguts a la app Vilafranquins de Tota la Vida.',
+                'Ets un VTV?',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
@@ -78,13 +83,13 @@ class AgeButton extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.75,
         child: ElevatedButton(
           style: ButtonStyle(
-            elevation: MaterialStateProperty.all(8.0),
-          ),
+              elevation: MaterialStateProperty.all(8.0),
+              shape: MaterialStateProperty.all(const StadiumBorder())),
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => QuestionnairePage(age: selectedAge)),
+                  builder: (context) => PreguntaPage(age: selectedAge)),
             );
           },
           child: Padding(
