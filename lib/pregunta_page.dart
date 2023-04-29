@@ -17,23 +17,33 @@ class PreguntaPage extends StatelessWidget {
     Future<List<Question>> preguntes =
         appState.getPreguntes(age.getAgeCohort());
 
-    return Scaffold(
+    return SafeArea(
+      child: Scaffold(
         appBar: AppBar(
           title: Text('Modalitat $ageLabel'),
         ),
-        body: FutureBuilder(
-          future: preguntes,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const Pregunta();
-            }
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: FutureBuilder(
+            future: preguntes,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Pregunta(
+                  pregunta: snapshot.data![0],
+                );
+              }
 
-            if (snapshot.hasError) {
-              return const Text('buu');
-            }
+              if (snapshot.hasError) {
+                // TODO: per fer
+                return const Text('buu');
+              }
 
-            return const Text('Encenent la traca...');
-          },
-        ));
+              // TODO: per fer
+              return const Text('Encenent la traca...');
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
