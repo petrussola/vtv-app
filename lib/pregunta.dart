@@ -76,7 +76,7 @@ class Resposta extends StatelessWidget {
             ),
             color: const Color.fromARGB(255, 241, 233, 233)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(
             resposta,
             style: const TextStyle(
