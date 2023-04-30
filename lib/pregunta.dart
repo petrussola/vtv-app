@@ -27,21 +27,21 @@ class Pregunta extends StatelessWidget {
 
 List createRespostes(respostes) {
   return respostes
-      .map((resposta) => Respota(
+      .map((resposta) => Resposta(
             resposta: resposta,
           ))
       .toList();
 }
 
-class Respota extends StatelessWidget {
-  const Respota({super.key, required this.resposta});
+class Resposta extends StatelessWidget {
+  const Resposta({super.key, required this.resposta});
 
   final String resposta;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 16.0),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.75,
         decoration: BoxDecoration(
@@ -49,14 +49,13 @@ class Respota extends StatelessWidget {
           borderRadius: const BorderRadius.all(
             Radius.circular(200.0),
           ),
-          color: const Color.fromARGB(255, 255, 0, 0),
-        ),
+          color: const Color.fromARGB(255, 241, 233, 233)     ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             resposta,
             style: const TextStyle(
-              color: Color.fromRGBO(255, 255, 255, 1),
+              color: Color.fromRGBO(0, 0, 0, 1),
               fontSize: 38.0,
             ),
             textAlign: TextAlign.center,
