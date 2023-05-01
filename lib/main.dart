@@ -75,6 +75,8 @@ class AgeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<AppState>();
+
     String ageLabel = selectedAge.getAgeLabel();
 
     return Padding(
@@ -86,6 +88,8 @@ class AgeButton extends StatelessWidget {
               elevation: MaterialStateProperty.all(8.0),
               shape: MaterialStateProperty.all(const StadiumBorder())),
           onPressed: () {
+            appState.setSolutionInvisible();
+            
             Navigator.push(
               context,
               MaterialPageRoute(

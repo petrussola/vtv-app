@@ -5,6 +5,7 @@ import 'package:vtv_app/datamodel.dart';
 class AppState extends ChangeNotifier {
   List preguntes = [];
   int indexPregunta = 0;
+  bool isSolutionVisible = false;
 
   Future<List<Question>> getPreguntes(ageCohort) {
     switch (ageCohort) {
@@ -29,11 +30,13 @@ class AppState extends ChangeNotifier {
 
   void getNextPregunta() {
     indexPregunta += 1;
+    isSolutionVisible = false;
     notifyListeners();
   }
 
   void getPreviousPregunta() {
     indexPregunta -= 1;
+    isSolutionVisible = false;
     notifyListeners();
   }
 
@@ -43,5 +46,18 @@ class AppState extends ChangeNotifier {
 
   bool isFirstPregunta() {
     return indexPregunta == 0;
+  }
+
+  bool getVisibilitySolution() {
+    return isSolutionVisible;
+  }
+
+  void toggleSolution() {
+    isSolutionVisible = !isSolutionVisible;
+    notifyListeners();
+  }
+
+  void setSolutionInvisible() {
+    isSolutionVisible = false;
   }
 }

@@ -41,7 +41,7 @@ class Pregunta extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          ...createRespostes(pregunta.respostes),
+          ...generateRespostes(pregunta.respostes, pregunta.indexCorrecte),
           const Spacer(),
           const RowActions()
         ],
@@ -50,37 +50,49 @@ class Pregunta extends StatelessWidget {
   }
 }
 
-List createRespostes(respostes) {
-  return respostes
-      .map((resposta) => Resposta(
-            resposta: resposta,
-          ))
-      .toList();
+List generateRespostes(respostes, indexCorrecte) {
+  int index = 0;
+
+  return respostes.map((resposta) {
+    bool isRespostaCorrecta = index == indexCorrecte;
+    index += 1;
+
+    return Resposta(
+      resposta: resposta,
+      isRespostaCorrecta: isRespostaCorrecta,
+    );
+  }).toList();
 }
 
 class Resposta extends StatelessWidget {
-  const Resposta({super.key, required this.resposta});
+  const Resposta(
+      {super.key, required this.resposta, required this.isRespostaCorrecta});
 
   final String resposta;
+  final bool isRespostaCorrecta;
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<AppState>();
+    bool isRespostaVisible = appState.getVisibilitySolution();
+
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            border: Border.all(width: 1.0),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(200.0),
-            ),
-            color: const Color.fromARGB(255, 241, 233, 233)),
+          border: Border.all(width: 1.0),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(200.0),
+          ),
+          color: getBackgroundColor(isRespostaVisible, isRespostaCorrecta),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             resposta,
-            style: const TextStyle(
-              color: Color.fromRGBO(0, 0, 0, 1),
+            style: TextStyle(
+              color: getTextColor(isRespostaVisible),
               fontSize: 38.0,
             ),
             textAlign: TextAlign.center,
@@ -97,6 +109,7 @@ class RowActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
+    bool isSolutionVisible = appState.getVisibilitySolution();
 
     void onClickNext() {
       appState.getNextPregunta();
@@ -114,11 +127,11 @@ class RowActions extends StatelessWidget {
             onPressed: () => appState.getPreviousPregunta(),
           ),
         IconButton(
-          icon: const Icon(
-            Icons.visibility_off,
+          icon: Icon(
+            isSolutionVisible ? Icons.visibility : Icons.visibility_off,
             size: 40.0,
           ),
-          onPressed: () {},
+          onPressed: () => appState.toggleSolution(),
         ),
         if (!appState.isLastPregunta())
           IconButton(
@@ -131,4 +144,24 @@ class RowActions extends StatelessWidget {
       ],
     );
   }
+}
+
+Color getBackgroundColor(isSolutionVisible, isCorrectAnswer) {
+  if (isSolutionVisible && isCorrectAnswer) {
+    return const Color.fromARGB(255, 0, 110, 6);
+  }
+
+  if (isSolutionVisible && !isCorrectAnswer) {
+    return const Color.fromARGB(255, 255, 0, 0);
+  }
+
+  return const Color.fromARGB(255, 241, 233, 233);
+}
+
+Color getTextColor(isSolutionVisible) {
+  if (isSolutionVisible) {
+    return const Color.fromARGB(255, 255, 255, 255);
+  }
+
+  return const Color.fromARGB(255, 0, 0, 0);
 }

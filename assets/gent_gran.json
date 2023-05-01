@@ -25,7 +25,7 @@
     "id": 4,
     "pregunta": "Quin era el producte estrella del Bar Esteve?",
     "respostes": ["Les patates", "La cervesa", "Els berberetxos"],
-    "indexCorrecte": 3
+    "indexCorrecte": 2
   },
   {
     "id": 5,
