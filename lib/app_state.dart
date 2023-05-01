@@ -3,6 +3,7 @@ import 'package:vtv_app/datamanager.dart';
 import 'package:vtv_app/datamodel.dart';
 
 class AppState extends ChangeNotifier {
+  Age? selectedAge;
   List<Question> preguntes = [];
   int indexCurrentPregunta = 0;
   int? currentPreguntaSelectedRespostaIndex;
@@ -94,5 +95,15 @@ class AppState extends ChangeNotifier {
         .add(Score(preguntaId, indexSelectedResposta, isValidAnswer));
 
     return;
+  }
+
+  void resetState(newAge) {
+    if (selectedAge != null && newAge != selectedAge) {
+      indexCurrentPregunta = 0;
+      currentPreguntaSelectedRespostaIndex = null;
+      cumulatedRespostes = [];
+    }
+
+    selectedAge = newAge;
   }
 }
