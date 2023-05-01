@@ -3,9 +3,10 @@ import 'package:vtv_app/datamanager.dart';
 import 'package:vtv_app/datamodel.dart';
 
 class AppState extends ChangeNotifier {
-  List preguntes = [];
-  int indexPregunta = 0;
-  bool isSolutionVisible = false;
+  List<Question> preguntes = [];
+  int indexCurrentPregunta = 0;
+  int? currentPreguntaSelectedRespostaIndex;
+  List<Score> cumulatedRespostes = [];
 
   Future<List<Question>> getPreguntes(ageCohort) {
     switch (ageCohort) {
@@ -25,39 +26,73 @@ class AppState extends ChangeNotifier {
   }
 
   Question getPreguntaActual() {
-    return preguntes[indexPregunta];
+    return preguntes[indexCurrentPregunta];
   }
 
-  void getNextPregunta() {
-    indexPregunta += 1;
-    isSolutionVisible = false;
-    notifyListeners();
+  int getPreguntaActualId() {
+    return preguntes[indexCurrentPregunta].id;
   }
 
   void getPreviousPregunta() {
-    indexPregunta -= 1;
-    isSolutionVisible = false;
+    indexCurrentPregunta -= 1;
+    resetCurrentPreguntaSelectedRespotaIndex();
+    notifyListeners();
+  }
+
+  void getNextPregunta() {
+    indexCurrentPregunta += 1;
+    resetCurrentPreguntaSelectedRespotaIndex();
     notifyListeners();
   }
 
   bool isLastPregunta() {
-    return indexPregunta == preguntes.length - 1;
+    return indexCurrentPregunta == preguntes.length - 1;
   }
 
   bool isFirstPregunta() {
-    return indexPregunta == 0;
+    return indexCurrentPregunta == 0;
   }
 
-  bool getVisibilitySolution() {
-    return isSolutionVisible;
-  }
-
-  void toggleSolution() {
-    isSolutionVisible = !isSolutionVisible;
+  void setCurrentPreguntaSelectedRespostaIndex(indexAnswer) {
+    currentPreguntaSelectedRespostaIndex = indexAnswer;
     notifyListeners();
   }
 
-  void setSolutionInvisible() {
-    isSolutionVisible = false;
+  void resetCurrentPreguntaSelectedRespotaIndex() {
+    if (cumulatedRespostes.length == indexCurrentPregunta) {
+      currentPreguntaSelectedRespostaIndex = null;
+    } else {
+      currentPreguntaSelectedRespostaIndex =
+          cumulatedRespostes[indexCurrentPregunta].indexSelectedAnswer;
+    }
+  }
+
+  int? getCurrentPreguntaSelectedRespostaIndex() {
+    return currentPreguntaSelectedRespostaIndex;
+  }
+
+  void storeRespostaSelection(preguntaId, indexSelectedResposta) {
+    setCurrentPreguntaSelectedRespostaIndex(indexSelectedResposta);
+
+    bool hasAnsweredQuestion =
+        cumulatedRespostes.any((resposta) => resposta.preguntaId == preguntaId);
+    Question resposta =
+        preguntes.firstWhere((pregunta) => pregunta.id == preguntaId);
+    bool isValidAnswer = resposta.indexCorrecte == indexSelectedResposta;
+
+    if (hasAnsweredQuestion) {
+      int indexInRespostes = cumulatedRespostes
+          .indexWhere((resposta) => resposta.preguntaId == preguntaId);
+
+      cumulatedRespostes[indexInRespostes] =
+          Score(preguntaId, indexSelectedResposta, isValidAnswer);
+
+      return;
+    }
+
+    cumulatedRespostes
+        .add(Score(preguntaId, indexSelectedResposta, isValidAnswer));
+
+    return;
   }
 }

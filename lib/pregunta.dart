@@ -14,17 +14,20 @@ class PreguntaWrapper extends StatelessWidget {
     appState.setListPreguntes(preguntes);
 
     Question preguntaActual = appState.getPreguntaActual();
+    int preguntaId = appState.getPreguntaActualId();
 
     return Pregunta(
       pregunta: preguntaActual,
+      preguntaId: preguntaId,
     );
   }
 }
 
 class Pregunta extends StatelessWidget {
-  const Pregunta({super.key, required this.pregunta});
+  const Pregunta({super.key, required this.pregunta, required this.preguntaId});
 
   final Question pregunta;
+  final int preguntaId;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,11 @@ class Pregunta extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          ...generateRespostes(pregunta.respostes, pregunta.indexCorrecte),
+          ...generateRespostes(
+            pregunta.respostes,
+            pregunta.indexCorrecte,
+            preguntaId,
+          ),
           const Spacer(),
           const RowActions()
         ],
@@ -50,52 +57,68 @@ class Pregunta extends StatelessWidget {
   }
 }
 
-List generateRespostes(respostes, indexCorrecte) {
+List generateRespostes(respostes, indexRespostaCorrecte, indexPregunta) {
   int index = 0;
 
   return respostes.map((resposta) {
-    bool isRespostaCorrecta = index == indexCorrecte;
+    bool isRespostaCorrecta = index == indexRespostaCorrecte;
+    int indexResposta = index;
     index += 1;
 
     return Resposta(
-      resposta: resposta,
-      isRespostaCorrecta: isRespostaCorrecta,
-    );
+        resposta: resposta,
+        isRespostaCorrecta: isRespostaCorrecta,
+        indexResposta: indexResposta,
+        preguntaId: indexPregunta);
   }).toList();
 }
 
 class Resposta extends StatelessWidget {
-  const Resposta(
-      {super.key, required this.resposta, required this.isRespostaCorrecta});
+  const Resposta({
+    super.key,
+    required this.resposta,
+    required this.isRespostaCorrecta,
+    required this.indexResposta,
+    required this.preguntaId,
+  });
 
   final String resposta;
   final bool isRespostaCorrecta;
+  final int indexResposta;
+  final int preguntaId;
 
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
-    bool isRespostaVisible = appState.getVisibilitySolution();
+
+    int? selectedRespostaIndex =
+        appState.getCurrentPreguntaSelectedRespostaIndex();
 
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          border: Border.all(width: 1.0),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(200.0),
+        child: ElevatedButton(
+          onPressed: () {
+            appState.storeRespostaSelection(preguntaId, indexResposta);
+          },
+          style: ElevatedButton.styleFrom(
+            shape: const StadiumBorder(),
+            backgroundColor: const Color.fromARGB(255, 241, 233, 233),
+            side: selectedRespostaIndex == indexResposta
+                ? const BorderSide(width: 3.0)
+                : null,
           ),
-          color: getBackgroundColor(isRespostaVisible, isRespostaCorrecta),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            resposta,
-            style: TextStyle(
-              color: getTextColor(isRespostaVisible),
-              fontSize: 38.0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              resposta,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 38.0,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -109,7 +132,9 @@ class RowActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
-    bool isSolutionVisible = appState.getVisibilitySolution();
+
+    bool hasSelectedAnswer =
+        appState.getCurrentPreguntaSelectedRespostaIndex() != null;
 
     void onClickNext() {
       appState.getNextPregunta();
@@ -126,14 +151,7 @@ class RowActions extends StatelessWidget {
             ),
             onPressed: () => appState.getPreviousPregunta(),
           ),
-        IconButton(
-          icon: Icon(
-            isSolutionVisible ? Icons.visibility : Icons.visibility_off,
-            size: 40.0,
-          ),
-          onPressed: () => appState.toggleSolution(),
-        ),
-        if (!appState.isLastPregunta())
+        if (!appState.isLastPregunta() && hasSelectedAnswer)
           IconButton(
             icon: const Icon(
               Icons.arrow_forward,
@@ -144,24 +162,4 @@ class RowActions extends StatelessWidget {
       ],
     );
   }
-}
-
-Color getBackgroundColor(isSolutionVisible, isCorrectAnswer) {
-  if (isSolutionVisible && isCorrectAnswer) {
-    return const Color.fromARGB(255, 0, 110, 6);
-  }
-
-  if (isSolutionVisible && !isCorrectAnswer) {
-    return const Color.fromARGB(255, 255, 0, 0);
-  }
-
-  return const Color.fromARGB(255, 241, 233, 233);
-}
-
-Color getTextColor(isSolutionVisible) {
-  if (isSolutionVisible) {
-    return const Color.fromARGB(255, 255, 255, 255);
-  }
-
-  return const Color.fromARGB(255, 0, 0, 0);
 }

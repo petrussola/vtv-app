@@ -36,3 +36,11 @@ class Question {
     indexCorrecte = json['indexCorrecte'] as int;
   }
 }
+
+class Score {
+  Score(this.preguntaId, this.indexSelectedAnswer, this.isValidAnswer);
+
+  late int preguntaId;
+  late int indexSelectedAnswer;
+  late bool isValidAnswer;
+}
