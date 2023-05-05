@@ -7,7 +7,7 @@ class AppState extends ChangeNotifier {
   List<Question> preguntes = [];
   int indexCurrentPregunta = 0;
   int? currentPreguntaSelectedRespostaIndex;
-  List<Score> cumulatedRespostes = [];
+  List<Score> answerTracking = [];
 
   Future<List<Question>> getPreguntes(ageCohort) {
     switch (ageCohort) {
@@ -60,11 +60,11 @@ class AppState extends ChangeNotifier {
   }
 
   void resetCurrentPreguntaSelectedRespotaIndex() {
-    if (cumulatedRespostes.length == indexCurrentPregunta) {
+    if (answerTracking.length == indexCurrentPregunta) {
       currentPreguntaSelectedRespostaIndex = null;
     } else {
       currentPreguntaSelectedRespostaIndex =
-          cumulatedRespostes[indexCurrentPregunta].indexSelectedAnswer;
+          answerTracking[indexCurrentPregunta].indexSelectedAnswer;
     }
   }
 
@@ -75,24 +75,23 @@ class AppState extends ChangeNotifier {
   void storeRespostaSelection(preguntaId, indexSelectedResposta) {
     setCurrentPreguntaSelectedRespostaIndex(indexSelectedResposta);
 
-    bool hasAnsweredQuestion =
-        cumulatedRespostes.any((resposta) => resposta.preguntaId == preguntaId);
-    Question resposta =
+    bool hasPreviouslyAnsweredQuestion =
+        answerTracking.any((answer) => answer.preguntaId == preguntaId);
+    Question preguntaActual =
         preguntes.firstWhere((pregunta) => pregunta.id == preguntaId);
-    bool isValidAnswer = resposta.indexCorrecte == indexSelectedResposta;
+    bool isValidAnswer = preguntaActual.indexCorrecte == indexSelectedResposta;
 
-    if (hasAnsweredQuestion) {
-      int indexInRespostes = cumulatedRespostes
+    if (hasPreviouslyAnsweredQuestion) {
+      int indexInRespostes = answerTracking
           .indexWhere((resposta) => resposta.preguntaId == preguntaId);
 
-      cumulatedRespostes[indexInRespostes] =
+      answerTracking[indexInRespostes] =
           Score(preguntaId, indexSelectedResposta, isValidAnswer);
 
       return;
     }
 
-    cumulatedRespostes
-        .add(Score(preguntaId, indexSelectedResposta, isValidAnswer));
+    answerTracking.add(Score(preguntaId, indexSelectedResposta, isValidAnswer));
 
     return;
   }
@@ -101,7 +100,7 @@ class AppState extends ChangeNotifier {
     if (selectedAge != null && newAge != selectedAge) {
       indexCurrentPregunta = 0;
       currentPreguntaSelectedRespostaIndex = null;
-      cumulatedRespostes = [];
+      answerTracking = [];
     }
 
     selectedAge = newAge;

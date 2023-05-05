@@ -151,13 +151,13 @@ class RowActions extends StatelessWidget {
             ),
             onPressed: () => appState.getPreviousPregunta(),
           ),
-        if (!appState.isLastPregunta() && hasSelectedAnswer)
+        if (!appState.isLastPregunta())
           IconButton(
             icon: const Icon(
               Icons.arrow_forward,
               size: 40.0,
             ),
-            onPressed: () => onClickNext(),
+            onPressed: hasSelectedAnswer ? () => onClickNext() : null,
           )
       ],
     );
