@@ -15,7 +15,7 @@ class PreguntaPage extends StatelessWidget {
 
     String ageLabel = age.getAgeLabel();
     Future<List<Question>> preguntesFuture =
-        appState.getPreguntes(age.getAgeCohort());
+        appState.loadPreguntes(age.getAgeCohort());
 
     return SafeArea(
       child: Scaffold(

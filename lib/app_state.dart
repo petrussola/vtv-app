@@ -10,7 +10,7 @@ class AppState extends ChangeNotifier {
   int? currentPreguntaSelectedRespostaIndex;
   List<Score> answerTracking = [];
 
-  Future<List<Question>> getPreguntes(ageCohort) {
+  Future<List<Question>> loadPreguntes(ageCohort) {
     switch (ageCohort) {
       case AgeCohort.gentJove:
         return DataManager.loadQuestionnaireJove();
@@ -21,6 +21,10 @@ class AppState extends ChangeNotifier {
       default:
         throw Error();
     }
+  }
+
+  List<Question> getCurrentListPreguntes() {
+    return preguntes;
   }
 
   void setListPreguntes(data) {
@@ -105,5 +109,9 @@ class AppState extends ChangeNotifier {
     }
 
     selectedAge = newAge;
+  }
+
+  List<Score> getScoreTracking() {
+    return answerTracking;
   }
 }
