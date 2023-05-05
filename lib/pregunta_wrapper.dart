@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vtv_app/app_state.dart';
 import 'package:vtv_app/datamodel.dart';
+import 'package:vtv_app/resultats_page.dart';
 
 class PreguntaWrapper extends StatelessWidget {
   const PreguntaWrapper({super.key, required this.preguntes});
@@ -158,6 +159,20 @@ class RowActions extends StatelessWidget {
               size: 40.0,
             ),
             onPressed: hasSelectedAnswer ? () => onClickNext() : null,
+          ),
+        if (appState.isLastPregunta())
+          IconButton(
+            icon: const Icon(
+              Icons.checklist,
+              size: 40.0,
+            ),
+            onPressed: hasSelectedAnswer
+                ? () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ResultatsPage(),
+                    ))
+                : null,
           )
       ],
     );

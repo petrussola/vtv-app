@@ -3,6 +3,7 @@ import 'package:vtv_app/datamanager.dart';
 import 'package:vtv_app/datamodel.dart';
 
 class AppState extends ChangeNotifier {
+  int maxNumberOfQuestions = 4;
   Age? selectedAge;
   List<Question> preguntes = [];
   int indexCurrentPregunta = 0;
@@ -47,7 +48,7 @@ class AppState extends ChangeNotifier {
   }
 
   bool isLastPregunta() {
-    return indexCurrentPregunta == preguntes.length - 1;
+    return indexCurrentPregunta == maxNumberOfQuestions - 1;
   }
 
   bool isFirstPregunta() {
