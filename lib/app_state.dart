@@ -4,7 +4,6 @@ import 'package:vtv_app/datamodel.dart';
 
 class AppState extends ChangeNotifier {
   int maxNumberOfQuestions = 4;
-  Age? selectedAge;
   List<Question> preguntes = [];
   int indexCurrentPregunta = 0;
   int? currentPreguntaSelectedRespostaIndex;
@@ -101,14 +100,10 @@ class AppState extends ChangeNotifier {
     return;
   }
 
-  void resetState(newAge) {
-    if (selectedAge != null && newAge != selectedAge) {
-      indexCurrentPregunta = 0;
-      currentPreguntaSelectedRespostaIndex = null;
-      answerTracking = [];
-    }
-
-    selectedAge = newAge;
+  void resetState() {
+    indexCurrentPregunta = 0;
+    currentPreguntaSelectedRespostaIndex = null;
+    answerTracking = [];
   }
 
   List<Score> getScoreTracking() {

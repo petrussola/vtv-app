@@ -59,8 +59,8 @@ class MyHomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
-            AgeButton(selectedAge: Age(AgeCohort.gentJove)),
-            AgeButton(selectedAge: Age(AgeCohort.gentGran)),
+            StartQuestionnaireButton(selectedAge: Age(AgeCohort.gentJove)),
+            StartQuestionnaireButton(selectedAge: Age(AgeCohort.gentGran)),
           ],
         ),
       ),
@@ -68,8 +68,8 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class AgeButton extends StatelessWidget {
-  const AgeButton({super.key, required this.selectedAge});
+class StartQuestionnaireButton extends StatelessWidget {
+  const StartQuestionnaireButton({super.key, required this.selectedAge});
 
   final Age selectedAge;
 
@@ -88,7 +88,7 @@ class AgeButton extends StatelessWidget {
               elevation: MaterialStateProperty.all(8.0),
               shape: MaterialStateProperty.all(const StadiumBorder())),
           onPressed: () {
-            appState.resetState(selectedAge);
+            appState.resetState();
 
             Navigator.push(
               context,

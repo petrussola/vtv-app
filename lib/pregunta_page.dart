@@ -14,7 +14,7 @@ class PreguntaPage extends StatelessWidget {
     var appState = context.watch<AppState>();
 
     String ageLabel = age.getAgeLabel();
-    Future<List<Question>> preguntesFuture =
+    Future<List<Question>> questionnaireFuture =
         appState.loadPreguntes(age.getAgeCohort());
 
     return SafeArea(
@@ -25,7 +25,7 @@ class PreguntaPage extends StatelessWidget {
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder(
-            future: preguntesFuture,
+            future: questionnaireFuture,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return PreguntaWrapper(
