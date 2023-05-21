@@ -5,7 +5,7 @@ import 'package:vtv_app/datamanager.dart';
 import 'package:vtv_app/datamodel.dart';
 
 class AppState extends ChangeNotifier {
-  int maxNumberOfQuestions = 4;
+  int maxNumberOfQuestions = 10;
   List<Question> preguntes = [];
   int indexCurrentPregunta = 0;
   int? currentPreguntaSelectedRespostaIndex;
@@ -28,12 +28,12 @@ class AppState extends ChangeNotifier {
     return preguntes;
   }
 
-  void setListPreguntes(data) {
+  void setListPreguntes(List<Question> data) {
     List<int> usedIndexes = [];
     int randomIndex;
 
     int generateRandomInteger() {
-      return Random().nextInt(maxNumberOfQuestions);
+      return Random().nextInt(data.length);
     }
 
     randomIndex = generateRandomInteger();
