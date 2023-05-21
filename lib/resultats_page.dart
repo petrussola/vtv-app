@@ -13,23 +13,9 @@ class ResultatsPage extends StatelessWidget {
     List<Score> scoreTracking = appState.getScoreTracking();
     Iterable<Score> correctAnswers =
         scoreTracking.where((answer) => answer.isValidAnswer);
-    double percentValid = correctAnswers.length / scoreTracking.length;
 
-    String scoreEmoji() {
-      if (percentValid == 1) {
-        return '🙌';
-      }
-
-      if (percentValid >= 0.75) {
-        return '👍';
-      }
-
-      if (percentValid >= 0.5) {
-        return '😐';
-      }
-
-      return '😝';
-    }
+    Map<String, String> assessment =
+        getResultAssessment(correctAnswers.length, scoreTracking.length);
 
     return SafeArea(
       child: Scaffold(
@@ -43,8 +29,25 @@ class ResultatsPage extends StatelessWidget {
               child: ListView(
                 children: [
                   Text(
-                    'Resultat: ${correctAnswers.length}/${scoreTracking.length} ${scoreEmoji()}',
+                    'Resultat: ${correctAnswers.length}/${scoreTracking.length} ${assessment['emoji']}',
                     style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      '${assessment['assessment']}',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                  ),
+                  const Divider(
+                    thickness: 1.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Text(
+                      'Revisió de les respostes:',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                   ),
                   ...generateResults(preguntes, scoreTracking),
                 ],
@@ -121,4 +124,39 @@ class Resultat extends StatelessWidget {
       ),
     );
   }
+}
+
+Map<String, String> getResultAssessment(
+    correctAnswersLenght, scoreTrackingLength) {
+  double percentValid = correctAnswersLenght / scoreTrackingLength;
+
+  if (percentValid == 1) {
+    return {
+      "emoji": '🙌',
+      "assessment":
+          'Enhorabona! Ets un/a VTV de soca-arrel. Aviat seràs Administrador/a.',
+    };
+  }
+
+  if (percentValid >= 0.75) {
+    return {
+      "emoji": '👍',
+      "assessment":
+          "Tens potencial, pero encara no estàs llest. Segueix estudiant l'article de Wikipedia sobre Vilafranca.",
+    };
+  }
+
+  if (percentValid >= 0.5) {
+    return {
+      "emoji": '😐',
+      "assessment":
+          "Encara hi ha feina per fer. Et recomanem llegir senceres les pàgines web de l'Ajuntament de Vilafranca i l'article de Wikipedia. 5 vegades.",
+    };
+  }
+
+  return {
+    "emoji": '😝',
+    "assessment":
+        "Fatal. Demana una subscripció del 3 de 8 als Reis i memoritza la secció local, cada setmana.",
+  };
 }
