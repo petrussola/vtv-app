@@ -32,5 +32,157 @@
     "pregunta": "Que hi ha ara a l'antic mercat de gallines i menuts?",
     "respostes": ["La Casa de la Festa Major", "El Banc Sabadell", "Una plaça"],
     "indexCorrecte": 0
+  },
+  {
+    "id": 6,
+    "pregunta": "On s'havien fet moltes campanes de l'Institut?",
+    "respostes": ["A Cal Chiquilin", "A Can Tabola", "Al Coro"],
+    "indexCorrecte": 1
+  },
+  {
+    "id": 7,
+    "pregunta": "Que era el Turó Park?",
+    "respostes": ["Un restaurant", "Una fonda", "Una botiga"],
+    "indexCorrecte": 0
+  },
+  {
+    "id": 8,
+    "pregunta": "Com s'anomenava popularment a l'Atlètic Vilafranca?",
+    "respostes": ["El Fandangas", "El Puñetero", "El Chiquilín"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 9,
+    "pregunta": "On estava la Font de la Mandra?",
+    "respostes": [
+      "Cruïlla carrer d'Amalia Soler i Carrer Germanor",
+      "Cruïlla carrer d'Amalia Soler i Carrer Tossa de Mar",
+      "Cruïlla carrer d'Amalia Soler i El Tivoli"
+    ],
+    "indexCorrecte": 0
+  },
+  {
+    "id": 10,
+    "pregunta": "Com es deia el bar que hi havia a la cantonada de l'Era Enrajolada amb el carrer Hermenegild Clascar?",
+    "respostes": ["Los Gusanos", "Els cargols", "Los Caracoles"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 11,
+    "pregunta": "Quina cruïlla es la dels 4 Cantons?",
+    "respostes": [
+      "Ferrers, Constitució, Cort",
+      "Parellada, Industria, Font",
+      "Cort, Rambla, St. Pere"
+    ],
+    "indexCorrecte": 1
+  },
+  {
+    "id": 12,
+    "pregunta": "On jugava els seus partits el Club Basquetbol Vilafranca quan es va fundar?",
+    "respostes": ["A Sant Ramon", "A St Elies", "A l'institut"],
+    "indexCorrecte": 0
+  },
+  {
+    "id": 13,
+    "pregunta": "Com es deia una coneguda impremta del carrer de la Parellada?",
+    "respostes": ["Pujol", "Cuscó", "Claret"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 14,
+    "pregunta": "Quin va ser el primer any que es van fer samarretes per la Festa Major?",
+    "respostes": ["1984", "1985", "1986"],
+    "indexCorrecte": 1
+  },
+  {
+    "id": 15,
+    "pregunta": "Quin és el ball que durant molts anys han portat els Raimons?",
+    "respostes": ["La Centauro", "La Maravella", "La Salseta del Poble Sec"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 16,
+    "pregunta": "Com es deia abans el bar musical Trànsit?",
+    "respostes": ["Sublim", "Màgic", "Magin"],
+    "indexCorrecte": 1
+  },
+  {
+    "id": 17,
+    "pregunta": "Com es deia la actual Plaça de Santa Maria?",
+    "respostes": ["Joan XXIII", "Pius XII", "Benet XV"],
+    "indexCorrecte": 1
+  },
+  {
+    "id": 18,
+    "pregunta": "Quines Caves hi havia al c/General Prim?",
+    "respostes": ["Raventos Catasús", "Mascaró", "Mas Tinell"],
+    "indexCorrecte": 0
+  },
+  {
+    "id": 19,
+    "pregunta": "A quin camp de futbol va fer el primer partit, després de ser segrestat, el jugador del Barça Quini?",
+    "respostes": ["Espirall", "El de les Pistes", "Creu de Sant Salvador"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 20,
+    "pregunta": "Qui va escriure 'Vilafranca. Senyora vila?'",
+    "respostes": ["Milà i Fontanals", "Torras i Bages", "Manuel Trens"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 21,
+    "pregunta": "Quin negoci regentava el Pepito Esteva?",
+    "respostes": ["Un bar", "Una impremta", "Una tenda de roba"],
+    "indexCorrecte": 1
+  },
+  {
+    "id": 22,
+    "pregunta": "Quin negoci regentava 'el Paulino'?",
+    "respostes": ["Barraca de tir", "Xurreria", "Restaurant"],
+    "indexCorrecte": 0
+  },
+  {
+    "id": 23,
+    "pregunta": "A quin carrer estava 'la carota'?",
+    "respostes": ["Fruita", "Indústria", "Escudellers"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 24,
+    "pregunta": "Quina botiga hi havia a la cantonada de la Parellada amb c/ de la Palma?",
+    "respostes": ["Cal Gomà", "Cal Bages", "Cal Solà"],
+    "indexCorrecte": 1
+  },
+  {
+    "id": 25,
+    "pregunta": "Quin negoci hi havia antigament on ara hi ha el local dels Xicots de Vilafranca?",
+    "respostes": ["Un fuster", "Un drapaire", "Un forn de pa"],
+    "indexCorrecte": 1
+  },
+  {
+    "id": 26,
+    "pregunta": "Com es deia l'ermita que hi havia al començament del carrer Santa Clara?",
+    "respostes": ["Sant Magí", "Sant Fèlix", "Sant Pau"],
+    "indexCorrecte": 0
+  },
+  {
+    "id": 27,
+    "pregunta": "La botiga del Barbadillo era...",
+    "respostes": ["una carnisseria", "una llibreria", "un forn de pa"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 28,
+    "pregunta": "Qui és el compatró de Vilafranca?",
+    "respostes": ["Sant Robert", "Sant Magí", "Sant Jocund"],
+    "indexCorrecte": 2
+  },
+  {
+    "id": 29,
+    "pregunta": "On va néixer St Raimon de Penyafort?",
+    "respostes": ["Santa Margarida i els Monjos", "Moja", "La Granada"],
+    "indexCorrecte": 0
   }
 ]
