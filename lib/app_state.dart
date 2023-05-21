@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:vtv_app/datamanager.dart';
 import 'package:vtv_app/datamodel.dart';
@@ -27,7 +29,28 @@ class AppState extends ChangeNotifier {
   }
 
   void setListPreguntes(data) {
-    preguntes = data;
+    List<int> usedIndexes = [];
+    int randomIndex;
+
+    int generateRandomInteger() {
+      return Random().nextInt(maxNumberOfQuestions);
+    }
+
+    randomIndex = generateRandomInteger();
+
+    preguntes.add(data[randomIndex]);
+    usedIndexes.add(randomIndex);
+
+    for (var i = 1; i < maxNumberOfQuestions; i++) {
+      randomIndex = generateRandomInteger();
+
+      while (usedIndexes.contains(randomIndex)) {
+        randomIndex = generateRandomInteger();
+      }
+
+      preguntes.add(data[randomIndex]);
+      usedIndexes.add(randomIndex);
+    }
   }
 
   Question getPreguntaActual() {
@@ -104,6 +127,7 @@ class AppState extends ChangeNotifier {
     indexCurrentPregunta = 0;
     currentPreguntaSelectedRespostaIndex = null;
     answerTracking = [];
+    preguntes = [];
   }
 
   List<Score> getScoreTracking() {

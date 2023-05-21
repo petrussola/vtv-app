@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'VTV - Vilafranquins de Tota la Vida'),
+        home: const MyHomePage(
+            title: 'Ets VTV? - Vilafranquí/ina de Tota la Vida'),
       ),
     );
   }
@@ -45,15 +46,7 @@ class MyHomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 32.0, bottom: 64.0),
-              child: Text(
-                'Ets un VTV?',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32.0),
+              padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),
               child: Text(
                 'Tria la teva modalitat:',
                 style: Theme.of(context).textTheme.headlineSmall,
@@ -61,6 +54,16 @@ class MyHomePage extends StatelessWidget {
             ),
             StartQuestionnaireButton(selectedAge: Age(AgeCohort.gentJove)),
             StartQuestionnaireButton(selectedAge: Age(AgeCohort.gentGran)),
+            const Spacer(),
+            Container(
+              height: 300.0,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/geganta.png'),
+                  fit: BoxFit.contain,
+                ),
+              ),
+            )
           ],
         ),
       ),
