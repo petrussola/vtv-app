@@ -13,6 +13,23 @@ class ResultatsPage extends StatelessWidget {
     List<Score> scoreTracking = appState.getScoreTracking();
     Iterable<Score> correctAnswers =
         scoreTracking.where((answer) => answer.isValidAnswer);
+    double percentValid = correctAnswers.length / scoreTracking.length;
+
+    String scoreEmoji() {
+      if (percentValid == 1) {
+        return '🙌';
+      }
+
+      if (percentValid >= 0.75) {
+        return '👍';
+      }
+
+      if (percentValid >= 0.5) {
+        return '😐';
+      }
+
+      return '😝';
+    }
 
     return SafeArea(
       child: Scaffold(
@@ -23,11 +40,10 @@ class ResultatsPage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
                 children: [
                   Text(
-                    'Resultat: ${correctAnswers.length}/${scoreTracking.length}',
+                    'Resultat: ${correctAnswers.length}/${scoreTracking.length} ${scoreEmoji()}',
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   ...generateResults(preguntes, scoreTracking),
