@@ -1,4 +1,4 @@
-package com.example.vtv_app
+package com.vtv_app
 
 import io.flutter.embedding.android.FlutterActivity
 
