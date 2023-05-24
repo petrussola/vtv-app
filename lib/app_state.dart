@@ -6,122 +6,102 @@ import 'package:vtv_app/datamodel.dart';
 
 class AppState extends ChangeNotifier {
   int maxNumberOfQuestions = 5;
-  List<Question> preguntes = [];
-  int indexCurrentPregunta = 0;
-  int? currentPreguntaSelectedRespostaIndex;
-  List<Score> answerTracking = [];
+  List<Question> questionsList = [];
+  int indexCurrentQuestion = 0;
+  int? currentQuestionSelectedResponseIndex;
+  List<Score> answerTrackingList = [];
 
   Future<List<Question>> loadPreguntes() {
     return DataManager.loadQuiz();
   }
 
   List<Question> getCurrentListPreguntes() {
-    return preguntes;
+    return questionsList;
   }
 
   void setListQuestions(List<Question> data) {
-    List<int> usedIndexes = [];
-    int randomIndex;
-
-    int generateRandomInteger() {
-      return Random().nextInt(data.length);
-    }
-
-    randomIndex = generateRandomInteger();
-
-    preguntes.add(data[randomIndex]);
-    usedIndexes.add(randomIndex);
-
-    for (var i = 1; i < maxNumberOfQuestions; i++) {
-      randomIndex = generateRandomInteger();
-
-      while (usedIndexes.contains(randomIndex)) {
-        randomIndex = generateRandomInteger();
-      }
-
-      preguntes.add(data[randomIndex]);
-      usedIndexes.add(randomIndex);
-    }
+    questionsList = data;
   }
 
   Question getPreguntaActual() {
-    return preguntes[indexCurrentPregunta];
+    return questionsList[indexCurrentQuestion];
   }
 
   int getPreguntaActualId() {
-    return preguntes[indexCurrentPregunta].id;
+    return questionsList[indexCurrentQuestion].id;
   }
 
   void getPreviousPregunta() {
-    indexCurrentPregunta -= 1;
+    indexCurrentQuestion -= 1;
     resetCurrentPreguntaSelectedRespotaIndex();
     notifyListeners();
   }
 
   void getNextPregunta() {
-    indexCurrentPregunta += 1;
+    indexCurrentQuestion += 1;
     resetCurrentPreguntaSelectedRespotaIndex();
     notifyListeners();
   }
 
   bool isLastPregunta() {
-    return indexCurrentPregunta == maxNumberOfQuestions - 1;
+    return indexCurrentQuestion == maxNumberOfQuestions - 1;
   }
 
   bool isFirstPregunta() {
-    return indexCurrentPregunta == 0;
+    return indexCurrentQuestion == 0;
   }
 
   void setCurrentPreguntaSelectedRespostaIndex(indexAnswer) {
-    currentPreguntaSelectedRespostaIndex = indexAnswer;
+    currentQuestionSelectedResponseIndex = indexAnswer;
     notifyListeners();
   }
 
   void resetCurrentPreguntaSelectedRespotaIndex() {
-    if (answerTracking.length == indexCurrentPregunta) {
-      currentPreguntaSelectedRespostaIndex = null;
+    if (answerTrackingList.length == indexCurrentQuestion) {
+      currentQuestionSelectedResponseIndex = null;
     } else {
-      currentPreguntaSelectedRespostaIndex =
-          answerTracking[indexCurrentPregunta].indexSelectedAnswer;
+      currentQuestionSelectedResponseIndex =
+          answerTrackingList[indexCurrentQuestion].indexSelectedAnswer;
     }
   }
 
   int? getCurrentPreguntaSelectedRespostaIndex() {
-    return currentPreguntaSelectedRespostaIndex;
+    return currentQuestionSelectedResponseIndex;
   }
 
   void storeRespostaSelection(preguntaId, indexSelectedResposta) {
     setCurrentPreguntaSelectedRespostaIndex(indexSelectedResposta);
 
     bool hasPreviouslyAnsweredQuestion =
-        answerTracking.any((answer) => answer.preguntaId == preguntaId);
+        answerTrackingList.any((answer) => answer.preguntaId == preguntaId);
     Question preguntaActual =
-        preguntes.firstWhere((pregunta) => pregunta.id == preguntaId);
+        questionsList.firstWhere((pregunta) => pregunta.id == preguntaId);
     bool isValidAnswer = preguntaActual.indexCorrecte == indexSelectedResposta;
 
     if (hasPreviouslyAnsweredQuestion) {
-      int indexInRespostes = answerTracking
+      int indexInRespostes = answerTrackingList
           .indexWhere((resposta) => resposta.preguntaId == preguntaId);
 
-      answerTracking[indexInRespostes] =
+      answerTrackingList[indexInRespostes] =
           Score(preguntaId, indexSelectedResposta, isValidAnswer);
 
       return;
     }
 
-    answerTracking.add(Score(preguntaId, indexSelectedResposta, isValidAnswer));
+    answerTrackingList
+        .add(Score(preguntaId, indexSelectedResposta, isValidAnswer));
 
     return;
   }
 
   void resetState() {
-    indexCurrentPregunta = 0;
-    currentPreguntaSelectedRespostaIndex = null;
-    answerTracking = [];
-    preguntes = [];
+    indexCurrentQuestion = 0;
+    currentQuestionSelectedResponseIndex = null;
+    answerTrackingList = [];
+    questionsList = [];
   }
 
   List<Score> getScoreTracking() {
-    return answerTracking;
+    return answerTrackingList;
   }
 }
