@@ -1,43 +1,19 @@
-enum AgeCohort { gentJove, gentGran }
-
-class Age {
-  final AgeCohort ageCohort;
-
-  Age(this.ageCohort);
-
-  AgeCohort getAgeCohort() {
-    return ageCohort;
-  }
-
-  String getAgeLabel() {
-    switch (ageCohort) {
-      case AgeCohort.gentJove:
-        return 'jove';
-      case AgeCohort.gentGran:
-        return 'gran';
-      default:
-        throw Error;
-    }
-  }
-}
-
-class Quiz {
-  
-}
-
 class Question {
-  Question(this.id, this.pregunta, this.respostes, this.indexCorrecte);
+  Question(
+      this.id, this.pregunta, this.respostes, this.indexCorrecte, this.day);
 
   late int id;
   late String pregunta;
   late List respostes;
   late int indexCorrecte;
+  late String day;
 
   Question.fromJson(Map<String, dynamic> json) {
     id = json['id'] as int;
     pregunta = json['pregunta'] as String;
     respostes = json['respostes'] as List;
     indexCorrecte = json['indexCorrecte'] as int;
+    day = json['day'] as String;
   }
 }
 

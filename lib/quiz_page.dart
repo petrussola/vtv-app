@@ -4,38 +4,34 @@ import 'package:vtv_app/app_state.dart';
 import 'package:vtv_app/datamodel.dart';
 import 'package:vtv_app/question_wrapper.dart';
 
-class PreguntaPage extends StatelessWidget {
-  const PreguntaPage({super.key, required this.age});
-
-  final Age age;
+class QuizPage extends StatelessWidget {
+  const QuizPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
 
-    String ageLabel = age.getAgeLabel();
-    Future<List<Question>> questionnaireFuture =
-        appState.loadPreguntes(age.getAgeCohort());
+    Future<List<Question>> quizFuture = appState.loadPreguntes();
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Modalitat $ageLabel'),
+          title: const Text('El quiz dels VTVs'),
         ),
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder(
-            future: questionnaireFuture,
+            future: quizFuture,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return PreguntaWrapper(
-                  preguntes: snapshot.data!,
+                return QuestionWrapper(
+                  questions: snapshot.data!,
                 );
               }
 
               if (snapshot.hasError) {
                 // TODO: per fer
-                return const Text('buu');
+                return const Text('Tens un error :(');
               }
 
               // TODO: per fer

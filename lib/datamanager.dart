@@ -3,27 +3,18 @@ import 'dart:convert';
 import 'package:vtv_app/datamodel.dart';
 
 class DataManager {
-  static Future<List<Question>> loadQuestionnaireJove() async {
-    String serializedJoveQuestionnaire =
-        await rootBundle.loadString('assets/gent_jove.json');
+  static Future<List<Question>> loadQuiz() async {
+    String serializedQuiz =
+        await rootBundle.loadString('assets/test_data.json');
 
-    List mapDataJove = jsonDecode(serializedJoveQuestionnaire);
+    List mapDataQuiz = jsonDecode(serializedQuiz);
 
-    List<Question> gentJoveQuestionnaire =
-        mapDataJove.map((question) => Question.fromJson(question)).toList();
+    List<Question> quiz =
+        mapDataQuiz.map((question) => Question.fromJson(question)).toList();
 
-    return gentJoveQuestionnaire;
-  }
+    List<Question> filteredQuiz =
+        quiz.where((question) => question.day == 'today').toList();
 
-  static Future<List<Question>> loadQuestionnaireGran() async {
-    String serializedGranQuestionnaire =
-        await rootBundle.loadString('assets/gent_gran.json');
-
-    List mapDataGran = jsonDecode(serializedGranQuestionnaire);
-
-    List<Question> gentGranQuestionnaire =
-        mapDataGran.map((question) => Question.fromJson(question)).toList();
-
-    return gentGranQuestionnaire;
+    return filteredQuiz;
   }
 }

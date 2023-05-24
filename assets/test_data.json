@@ -1,0 +1,76 @@
+[
+  {
+    "id": 1,
+    "pregunta": "Puix per nostre protector el cel volgué...",
+    "respostes": ["destinar-vos", "explicar-vos", "dirigir-vos"],
+    "indexCorrecte": 0,
+    "day": "today"
+  },
+  {
+    "id": 2,
+    "pregunta": "Com es deia el Carrer de Cal Bolet abans?",
+    "respostes": ["Duc de la Victoria", "Melió", "Ponent"],
+    "indexCorrecte": 0,
+    "day": "today"
+  },
+  {
+    "id": 3,
+    "pregunta": "Quin dia d'agost comencen els Goigs de St. Felix?",
+    "respostes": ["21", "22", "23"],
+    "indexCorrecte": 1,
+    "day": "today"
+  },
+  {
+    "id": 4,
+    "pregunta": "On estava el Discofilm?",
+    "respostes": ["Pl. Jaume I", "C/ Cort", "La Parellada"],
+    "indexCorrecte": 2,
+    "day": "today"
+  },
+  {
+    "id": 5,
+    "pregunta": "Com es deia el Casal Okupa de la Crta Vilanova?",
+    "respostes": ["Kasal Alternatiu", "Can Cellerot", "Okupa Vilafranca"],
+    "indexCorrecte": 1,
+    "day": "today"
+  },
+  {
+    "id": 6,
+    "pregunta": "Qui patrocinava la matinal esportiva de Radio Vilafranca?",
+    "respostes": ["Mobles Guardiet", "Mobles Quer", "Mobles Feliu"],
+    "indexCorrecte": 2,
+    "day": "tomorrow"
+  },
+  {
+    "id": 7,
+    "pregunta": "Què son els Murris?",
+    "respostes": [
+      "La Canalla dels castellers",
+      "Fans del FC. Vilafranca",
+      "Campanya marketing Caixa Penedes"
+    ],
+    "indexCorrecte": 2,
+    "day": "tomorrow"
+  },
+  {
+    "id": 8,
+    "pregunta": "Quin dia comencen les matines de la Festa Major?",
+    "respostes": ["29", "30", "31"],
+    "indexCorrecte": 1,
+    "day": "tomorrow"
+  },
+  {
+    "id": 9,
+    "pregunta": "Quin dia es canta l'escurçó negre?",
+    "respostes": ["La nit de cap d'any", "El 30 d'agost", "L'11 de setembre"],
+    "indexCorrecte": 1,
+    "day": "tomorrow"
+  },
+  {
+    "id": 10,
+    "pregunta": "Com es deia la Pl. Penedès abans?",
+    "respostes": ["Pl. Exèrcit", "Pl. Pere III", "Pl. Vilanova"],
+    "indexCorrecte": 0,
+    "day": "tomorrow"
+  }
+]

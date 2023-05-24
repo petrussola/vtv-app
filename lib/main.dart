@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vtv_app/app_state.dart';
-import 'package:vtv_app/datamodel.dart';
 import 'package:vtv_app/quiz_page.dart';
 
 void main() {
@@ -21,8 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(
-            title: 'El quiz dels VTVs'),
+        home: const MyHomePage(title: 'El quiz dels VTVs'),
       ),
     );
   }
@@ -52,8 +50,7 @@ class MyHomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
-            StartQuestionnaireButton(selectedAge: Age(AgeCohort.gentJove)),
-            StartQuestionnaireButton(selectedAge: Age(AgeCohort.gentGran)),
+            const StartQuestionnaireButton(),
             const Spacer(),
             Container(
               height: 300.0,
@@ -72,15 +69,11 @@ class MyHomePage extends StatelessWidget {
 }
 
 class StartQuestionnaireButton extends StatelessWidget {
-  const StartQuestionnaireButton({super.key, required this.selectedAge});
-
-  final Age selectedAge;
+  const StartQuestionnaireButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
-
-    String ageLabel = selectedAge.getAgeLabel();
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -96,14 +89,15 @@ class StartQuestionnaireButton extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => PreguntaPage(age: selectedAge)),
+                builder: (context) => const QuizPage(),
+              ),
             );
           },
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+          child: const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Text(
-              'Gent $ageLabel',
-              style: const TextStyle(fontSize: 32.0),
+              'Jugar',
+              style: TextStyle(fontSize: 32.0),
             ),
           ),
         ),

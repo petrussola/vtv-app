@@ -61,6 +61,7 @@ flutter:
   assets:
     - assets/gent_jove.json
     - assets/gent_gran.json
+    - assets/test_data.json
     - assets/geganta.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

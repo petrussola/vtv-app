@@ -4,15 +4,15 @@ import 'package:vtv_app/app_state.dart';
 import 'package:vtv_app/datamodel.dart';
 import 'package:vtv_app/results_page.dart';
 
-class PreguntaWrapper extends StatelessWidget {
-  const PreguntaWrapper({super.key, required this.preguntes});
+class QuestionWrapper extends StatelessWidget {
+  const QuestionWrapper({super.key, required this.questions});
 
-  final List<Question> preguntes;
+  final List<Question> questions;
 
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
-    appState.setListPreguntes(preguntes);
+    appState.setListQuestions(questions);
 
     Question preguntaActual = appState.getPreguntaActual();
     int preguntaId = appState.getPreguntaActualId();

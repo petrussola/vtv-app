@@ -5,30 +5,21 @@ import 'package:vtv_app/datamanager.dart';
 import 'package:vtv_app/datamodel.dart';
 
 class AppState extends ChangeNotifier {
-  int maxNumberOfQuestions = 10;
+  int maxNumberOfQuestions = 5;
   List<Question> preguntes = [];
   int indexCurrentPregunta = 0;
   int? currentPreguntaSelectedRespostaIndex;
   List<Score> answerTracking = [];
 
-  Future<List<Question>> loadPreguntes(ageCohort) {
-    switch (ageCohort) {
-      case AgeCohort.gentJove:
-        return DataManager.loadQuestionnaireJove();
-
-      case AgeCohort.gentGran:
-        return DataManager.loadQuestionnaireGran();
-
-      default:
-        throw Error();
-    }
+  Future<List<Question>> loadPreguntes() {
+    return DataManager.loadQuiz();
   }
 
   List<Question> getCurrentListPreguntes() {
     return preguntes;
   }
 
-  void setListPreguntes(List<Question> data) {
+  void setListQuestions(List<Question> data) {
     List<int> usedIndexes = [];
     int randomIndex;
 
