@@ -18,17 +18,30 @@ class QuestionWrapper extends StatelessWidget {
     int preguntaId = appState.getPreguntaActualId();
 
     return Pregunta(
-      pregunta: preguntaActual,
+      question: preguntaActual,
       preguntaId: preguntaId,
     );
   }
 }
 
-class Pregunta extends StatelessWidget {
-  const Pregunta({super.key, required this.pregunta, required this.preguntaId});
+class Pregunta extends StatefulWidget {
+  const Pregunta({super.key, required this.question, required this.preguntaId});
 
-  final Question pregunta;
+  final Question question;
   final int preguntaId;
+
+  @override
+  State<Pregunta> createState() => _PreguntaState();
+}
+
+class _PreguntaState extends State<Pregunta> {
+  bool isPreguntaLocked = false;
+
+  void toggleLockPregunta(bool state) {
+    setState(() {
+      isPreguntaLocked = state;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,52 +54,64 @@ class Pregunta extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
             child: Text(
-              pregunta.pregunta,
+              widget.question.pregunta,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          ...generateRespostes(
-            pregunta.respostes,
-            pregunta.indexCorrecte,
-            preguntaId,
+          ...generateAnswers(
+            widget.question.respostes,
+            widget.question.indexCorrecte,
+            widget.preguntaId,
+            isPreguntaLocked,
+            toggleLockPregunta,
           ),
           const Spacer(),
-          const RowActions()
+          RowActions(
+            toggleLockPregunta: toggleLockPregunta,
+          ),
         ],
       ),
     );
   }
 }
 
-List generateRespostes(respostes, indexRespostaCorrecte, indexPregunta) {
+List generateAnswers(answers, indexCorrectAnswer, indexQuestion,
+    isPreguntaLocked, toggleLockPregunta) {
   int index = 0;
 
-  return respostes.map((resposta) {
-    bool isRespostaCorrecta = index == indexRespostaCorrecte;
+  return answers.map((resposta) {
+    bool isRespostaCorrecta = index == indexCorrectAnswer;
     int indexResposta = index;
     index += 1;
 
-    return Resposta(
-        resposta: resposta,
-        isRespostaCorrecta: isRespostaCorrecta,
-        indexResposta: indexResposta,
-        preguntaId: indexPregunta);
+    return Answer(
+      resposta: resposta,
+      isRespostaCorrecta: isRespostaCorrecta,
+      indexResposta: indexResposta,
+      preguntaId: indexQuestion,
+      isPreguntaLocked: isPreguntaLocked,
+      toggleLockPregunta: toggleLockPregunta,
+    );
   }).toList();
 }
 
-class Resposta extends StatelessWidget {
-  const Resposta({
+class Answer extends StatelessWidget {
+  const Answer({
     super.key,
     required this.resposta,
     required this.isRespostaCorrecta,
     required this.indexResposta,
     required this.preguntaId,
+    required this.isPreguntaLocked,
+    required this.toggleLockPregunta,
   });
 
   final String resposta;
   final bool isRespostaCorrecta;
   final int indexResposta;
   final int preguntaId;
+  final bool isPreguntaLocked;
+  final Function(bool) toggleLockPregunta;
 
   @override
   Widget build(BuildContext context) {
@@ -100,22 +125,28 @@ class Resposta extends StatelessWidget {
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
-          onPressed: () {
-            appState.storeRespostaSelection(preguntaId, indexResposta);
-          },
+          onPressed: isPreguntaLocked
+              ? null
+              : () => {
+                    appState.storeRespostaSelection(preguntaId, indexResposta),
+                    toggleLockPregunta(true),
+                  },
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
             backgroundColor: const Color.fromARGB(255, 241, 233, 233),
-            side: selectedRespostaIndex == indexResposta
-                ? const BorderSide(width: 3.0)
-                : null,
+            disabledBackgroundColor: getDisabledBackgroundColor(
+                isPreguntaLocked,
+                isRespostaCorrecta,
+                indexResposta,
+                selectedRespostaIndex),
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               resposta,
               style: TextStyle(
-                color: const Color.fromARGB(255, 0, 0, 0),
+                color: getDisabledTextColor(isPreguntaLocked,
+                    isRespostaCorrecta, indexResposta, selectedRespostaIndex),
                 fontSize: resposta.length > 20 ? 25.0 : 38.0,
               ),
               textAlign: TextAlign.center,
@@ -128,7 +159,9 @@ class Resposta extends StatelessWidget {
 }
 
 class RowActions extends StatelessWidget {
-  const RowActions({super.key});
+  const RowActions({super.key, required this.toggleLockPregunta});
+
+  final Function(bool) toggleLockPregunta;
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +202,12 @@ class RowActions extends StatelessWidget {
               Icons.arrow_forward,
               size: 40.0,
             ),
-            onPressed: hasSelectedAnswer ? () => onClickNext() : null,
+            onPressed: hasSelectedAnswer
+                ? () => {
+                      onClickNext(),
+                      toggleLockPregunta(false),
+                    }
+                : null,
           ),
         if (appState.isLastPregunta())
           IconButton(
@@ -188,4 +226,32 @@ class RowActions extends StatelessWidget {
       ],
     );
   }
+}
+
+Color getDisabledBackgroundColor(isPreguntaLocked, isRespostaCorrecta,
+    indexResposta, selectedRespostaIndex) {
+  if (!isPreguntaLocked) {
+    return const Color.fromARGB(255, 241, 233, 233);
+  }
+
+  if (isRespostaCorrecta) {
+    return const Color.fromARGB(255, 3, 116, 18);
+  }
+
+  if (selectedRespostaIndex == indexResposta && !isRespostaCorrecta) {
+    return const Color.fromARGB(255, 255, 0, 0);
+  }
+
+  return const Color.fromARGB(255, 241, 233, 233);
+}
+
+Color getDisabledTextColor(isPreguntaLocked, isRespostaCorrecta, indexResposta,
+    selectedRespostaIndex) {
+  if (isPreguntaLocked) {
+    if (isRespostaCorrecta || indexResposta == selectedRespostaIndex) {
+      return const Color.fromARGB(255, 255, 255, 255);
+    }
+  }
+
+  return const Color.fromARGB(255, 0, 0, 0);
 }
