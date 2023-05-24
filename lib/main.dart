@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vtv_app/app_state.dart';
 import 'package:vtv_app/datamodel.dart';
-import 'package:vtv_app/pregunta_page.dart';
+import 'package:vtv_app/quiz_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const MyHomePage(
-            title: 'Ets VTV? - Vilafranquí/ina de Tota la Vida'),
+            title: 'El quiz dels VTVs'),
       ),
     );
   }
@@ -48,7 +48,7 @@ class MyHomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 32.0, bottom: 32.0),
               child: Text(
-                'Tria la teva modalitat:',
+                'VTV, estas a punt per jugar?',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),

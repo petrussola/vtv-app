@@ -21,6 +21,10 @@ class Age {
   }
 }
 
+class Quiz {
+  
+}
+
 class Question {
   Question(this.id, this.pregunta, this.respostes, this.indexCorrecte);
 

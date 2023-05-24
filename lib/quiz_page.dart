@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vtv_app/app_state.dart';
 import 'package:vtv_app/datamodel.dart';
-import 'package:vtv_app/pregunta_wrapper.dart';
+import 'package:vtv_app/question_wrapper.dart';
 
 class PreguntaPage extends StatelessWidget {
   const PreguntaPage({super.key, required this.age});

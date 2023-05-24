@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vtv_app/app_state.dart';
 import 'package:vtv_app/datamodel.dart';
-import 'package:vtv_app/resultats_page.dart';
+import 'package:vtv_app/results_page.dart';
 
 class PreguntaWrapper extends StatelessWidget {
   const PreguntaWrapper({super.key, required this.preguntes});
