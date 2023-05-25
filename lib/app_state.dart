@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:vtv_app/datamanager.dart';
 import 'package:vtv_app/datamodel.dart';
 
+const int maxNumberOfQuestions = 5;
+
 class AppState extends ChangeNotifier {
-  int maxNumberOfQuestions = 5;
   List<Question> questionsList = [];
   int indexCurrentQuestion = 0;
   int? currentQuestionSelectedResponseIndex;
-  List<Score> answerTrackingList = [];
+  List<Score> answerTrackingList = List<Score>.filled(
+    maxNumberOfQuestions,
+    Score(null, null, null),
+    growable: false,
+  );
 
   Future<List<Question>> loadPreguntes() {
     return DataManager.loadQuiz();
@@ -70,36 +75,29 @@ class AppState extends ChangeNotifier {
   void storeRespostaSelection(preguntaId, indexSelectedResposta) {
     setCurrentPreguntaSelectedRespostaIndex(indexSelectedResposta);
 
-    bool hasPreviouslyAnsweredQuestion =
-        answerTrackingList.any((answer) => answer.preguntaId == preguntaId);
-    Question preguntaActual =
+    final preguntaActual =
         questionsList.firstWhere((pregunta) => pregunta.id == preguntaId);
-    bool isValidAnswer = preguntaActual.indexCorrecte == indexSelectedResposta;
+    final isValidAnswer = preguntaActual.indexCorrecte == indexSelectedResposta;
 
-    if (hasPreviouslyAnsweredQuestion) {
-      int indexInRespostes = answerTrackingList
-          .indexWhere((resposta) => resposta.preguntaId == preguntaId);
-
-      answerTrackingList[indexInRespostes] =
-          Score(preguntaId, indexSelectedResposta, isValidAnswer);
-
-      return;
-    }
-
-    answerTrackingList
-        .add(Score(preguntaId, indexSelectedResposta, isValidAnswer));
-
-    return;
+    answerTrackingList[indexCurrentQuestion] = Score(
+      preguntaId,
+      indexSelectedResposta,
+      isValidAnswer,
+    );
   }
 
   void resetState() {
     indexCurrentQuestion = 0;
     currentQuestionSelectedResponseIndex = null;
-    answerTrackingList = [];
+    answerTrackingList = List<Score>.filled(
+      maxNumberOfQuestions,
+      Score(null, null, null),
+      growable: false,
+    );
     questionsList = [];
   }
 
-  List<Score> getScoreTracking() {
+  List<Score> getAnswerTrackingList() {
     return answerTrackingList;
   }
 }

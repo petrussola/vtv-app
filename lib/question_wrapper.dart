@@ -69,6 +69,8 @@ class _PreguntaState extends State<Pregunta> {
           RowActions(
             toggleLockPregunta: toggleLockPregunta,
           ),
+          const Divider(),
+          const ScoreTracking()
         ],
       ),
     );
@@ -225,6 +227,65 @@ class RowActions extends StatelessWidget {
           )
       ],
     );
+  }
+}
+
+class ScoreTracking extends StatelessWidget {
+  const ScoreTracking({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<AppState>();
+
+    final answerTrackingList = appState.getAnswerTrackingList();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: answerTrackingList.asMap().entries.map(
+          (answerDetails) {
+            final numberQuestion = answerDetails.key + 1;
+
+            return Container(
+              height: 48.0,
+              width: 48.0,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(200.0)),
+                color: getTrackingIconBackgroundColor(answerDetails.value),
+              ),
+              child: Text(numberQuestion.toString(),
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    color:
+                        getTrackingIconTextColor(answerDetails.value),
+                  )),
+            );
+          },
+        ).toList(),
+      ),
+    );
+  }
+
+  getTrackingIconBackgroundColor(Score answer) {
+    if (answer.indexSelectedAnswer == null) {
+      return const Color.fromARGB(255, 241, 233, 233);
+    }
+
+    if (answer.isValidAnswer == true) {
+      return const Color.fromARGB(255, 3, 116, 18);
+    }
+
+    return const Color.fromARGB(255, 255, 0, 0);
+  }
+
+  getTrackingIconTextColor(Score answer) {
+    if (answer.indexSelectedAnswer == null) {
+      return const Color.fromARGB(0, 0, 0, 0);
+    }
+
+    return const Color.fromARGB(255, 255, 255, 255);
   }
 }
 

@@ -20,7 +20,7 @@ class Question {
 class Score {
   Score(this.preguntaId, this.indexSelectedAnswer, this.isValidAnswer);
 
-  late int preguntaId;
-  late int indexSelectedAnswer;
-  late bool isValidAnswer;
+  late int? preguntaId;
+  late int? indexSelectedAnswer;
+  late bool? isValidAnswer;
 }

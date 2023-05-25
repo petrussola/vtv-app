@@ -10,9 +10,9 @@ class ResultatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
     List<Question> preguntes = appState.getCurrentListPreguntes();
-    List<Score> scoreTracking = appState.getScoreTracking();
-    Iterable<Score> correctAnswers =
-        scoreTracking.where((answer) => answer.isValidAnswer);
+    List<Score> scoreTracking = appState.getAnswerTrackingList();
+    Iterable<Score> correctAnswers = scoreTracking.where((answer) =>
+        answer.isValidAnswer != null && answer.isValidAnswer == true);
 
     Map<String, String> assessment =
         getResultAssessment(correctAnswers.length, scoreTracking.length);
@@ -65,15 +65,17 @@ List generateResults(
   int index = 0;
 
   return answerTracking.map((answer) {
-    Score answer = answerTracking[index];
-    Question pregunta =
+    final answer = answerTracking[index];
+    final pregunta =
         preguntes.firstWhere((pregunta) => pregunta.id == answer.preguntaId);
-    String selectedAnswer = pregunta.respostes[answer.indexSelectedAnswer];
+    final String selectedAnswer =
+        pregunta.respostes[answer.indexSelectedAnswer!];
     index += 1;
 
     return Resultat(
         pregunta: pregunta.pregunta,
-        isValidAnswer: answer.isValidAnswer,
+        isValidAnswer:
+            answer.isValidAnswer != null && answer.isValidAnswer == true,
         selectedAnswer: selectedAnswer);
   }).toList();
 }
