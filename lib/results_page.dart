@@ -28,40 +28,59 @@ class ResultatsPage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: ListView(
+              child: Column(
                 children: [
                   Text(
                     'Resultat: ${correctAnswers.length}/${scoreTracking.length} ${resultMessage['emoji']}',
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.only(top: 16.0),
                     child: Text(
                       '${resultMessage['assessment']}',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: Divider(
-                      thickness: 1.0,
-                    ),
-                  ),
+                  const CustomDivider(),
                   Text(
                     'Respostes:',
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   const ScoreTracking(),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: Divider(
-                      thickness: 1.0,
-                    ),
-                  ),
+                  const CustomDivider(),
                   ShareSection(
                     correctAnswersCount: correctAnswers.length,
                     answersCount: scoreTracking.length,
                   ),
+                  const CustomDivider(),
+                  const Spacer(),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(8.0),
+                        fixedSize: MaterialStateProperty.all(
+                          Size(MediaQuery.of(context).size.width, 100.0),
+                        ),
+                        side: MaterialStateProperty.all(
+                            const BorderSide(width: 2.0)),
+                        padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(vertical: 16.0),
+                        ),
+                        backgroundColor: MaterialStateProperty.all(
+                          const Color.fromARGB(255, 255, 255, 255),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10.0),
+                            ),
+                          ),
+                        )),
+                    onPressed: () {},
+                    child: Text(
+                      'Veure els resultats',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                  )
                 ],
               )),
         ),
@@ -135,6 +154,20 @@ class Resultat extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CustomDivider extends StatelessWidget {
+  const CustomDivider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Divider(
+        thickness: 1.0,
       ),
     );
   }

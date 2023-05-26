@@ -33,8 +33,16 @@ class ShareSection extends StatelessWidget {
               padding: MaterialStateProperty.all<EdgeInsets>(
                 const EdgeInsets.all(16.0),
               ),
+              backgroundColor: MaterialStateProperty.all(
+                const Color.fromARGB(255, 255, 255, 255),
+              ),
+              side: MaterialStateProperty.all(const BorderSide(width: 2.0)),
             ),
-            child: const Icon(Icons.share, size: 32.0)),
+            child: const Icon(
+              Icons.share,
+              size: 32.0,
+              color: Color.fromARGB(255, 0, 0, 0),
+            )),
       ),
     ]);
   }
