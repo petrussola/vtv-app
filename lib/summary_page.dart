@@ -15,7 +15,7 @@ class SummaryPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Sumari de les preguntes'),
+          title: const Text('Sumari de respostes'),
         ),
         body: ListView(
           children: [...generateResults(preguntes, scoreTracking)],
@@ -67,42 +67,45 @@ class Resultat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
-      child: Row(
-        children: [
-          if (isValidAnswer)
-            const Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ),
-          if (!isValidAnswer) const Icon(Icons.cancel, color: Colors.red),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    pregunta,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  WithTopPadding(
-                    child: Text(
-                      'Has seleccionat: $selectedAnswer',
-                      style: Theme.of(context).textTheme.bodyLarge,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            if (isValidAnswer)
+              const Icon(
+                Icons.check_circle,
+                color: Colors.green,
+              ),
+            if (!isValidAnswer) const Icon(Icons.cancel, color: Colors.red),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      pregunta,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                  ),
-                  if (!isValidAnswer)
                     WithTopPadding(
                       child: Text(
-                        'Resposta correcta: $correctAnswer',
+                        'Has seleccionat: $selectedAnswer',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
-                ],
+                    if (!isValidAnswer)
+                      WithTopPadding(
+                        child: Text(
+                          'Resposta correcta: $correctAnswer',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
