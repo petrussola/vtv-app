@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vtv_app/datamanager.dart';
 import 'package:vtv_app/datamodel.dart';
 
-const int maxNumberOfQuestions = 5;
+const maxNumberOfQuestions = 5;
+const day = "tomorrow";
 
 class AppState extends ChangeNotifier {
   List<Question> questionsList = [];

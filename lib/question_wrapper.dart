@@ -67,8 +67,8 @@ class _PreguntaState extends State<Pregunta> {
           ),
           const Spacer(),
           RowActions(
-            toggleLockPregunta: toggleLockPregunta,
-          ),
+              toggleLockPregunta: toggleLockPregunta,
+              explanation: widget.question.explanation),
           const Divider(),
           const ScoreTracking()
         ],
@@ -161,9 +161,14 @@ class Answer extends StatelessWidget {
 }
 
 class RowActions extends StatelessWidget {
-  const RowActions({super.key, required this.toggleLockPregunta});
+  const RowActions({
+    super.key,
+    required this.toggleLockPregunta,
+    required this.explanation,
+  });
 
   final Function(bool) toggleLockPregunta;
+  final String? explanation;
 
   @override
   Widget build(BuildContext context) {
@@ -180,24 +185,37 @@ class RowActions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         if (hasSelectedAnswer)
-          ElevatedButton(
-            style: ButtonStyle(
-              elevation: MaterialStateProperty.all(8.0),
-              shape: MaterialStateProperty.all(
-                const StadiumBorder(),
+          if (explanation != null)
+            ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(8.0),
+                shape: MaterialStateProperty.all(
+                  const StadiumBorder(),
+                ),
               ),
-            ),
-            onPressed: () {},
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Explicació',
-                style: TextStyle(
-                  fontSize: 24.0,
+              onPressed: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  content: Text(explanation!),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text("D'acord"),
+                    ),
+                  ],
+                  contentTextStyle: Theme.of(context).textTheme.headlineSmall,
+                ),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Explicació',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                  ),
                 ),
               ),
             ),
-          ),
         if (!appState.isLastPregunta())
           IconButton(
             icon: const Icon(
@@ -258,8 +276,7 @@ class ScoreTracking extends StatelessWidget {
               child: Text(numberQuestion.toString(),
                   style: TextStyle(
                     fontSize: 32.0,
-                    color:
-                        getTrackingIconTextColor(answerDetails.value),
+                    color: getTrackingIconTextColor(answerDetails.value),
                   )),
             );
           },
@@ -282,7 +299,7 @@ class ScoreTracking extends StatelessWidget {
 
   getTrackingIconTextColor(Score answer) {
     if (answer.indexSelectedAnswer == null) {
-      return const Color.fromARGB(0, 0, 0, 0);
+      return const Color.fromARGB(255, 0, 0, 0);
     }
 
     return const Color.fromARGB(255, 255, 255, 255);

@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:vtv_app/app_state.dart';
 import 'dart:convert';
 import 'package:vtv_app/datamodel.dart';
 
@@ -13,7 +14,7 @@ class DataManager {
         mapDataQuiz.map((question) => Question.fromJson(question)).toList();
 
     List<Question> filteredQuiz =
-        quiz.where((question) => question.day == 'today').toList();
+        quiz.where((question) => question.day == day).toList();
 
     return filteredQuiz;
   }
