@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:vtv_app/app_state.dart';
 import 'package:vtv_app/datamodel.dart';
 import 'package:vtv_app/question_wrapper.dart';
+import 'package:vtv_app/share_section.dart';
 
 class ResultatsPage extends StatelessWidget {
   const ResultatsPage({super.key});
@@ -15,7 +16,7 @@ class ResultatsPage extends StatelessWidget {
     Iterable<Score> correctAnswers = scoreTracking.where((answer) =>
         answer.isValidAnswer != null && answer.isValidAnswer == true);
 
-    Map<String, String> assessment =
+    Map<String, String> resultMessage =
         getResultAssessment(correctAnswers.length, scoreTracking.length);
 
     return SafeArea(
@@ -30,27 +31,37 @@ class ResultatsPage extends StatelessWidget {
               child: ListView(
                 children: [
                   Text(
-                    'Resultat: ${correctAnswers.length}/${scoreTracking.length} ${assessment['emoji']}',
+                    'Resultat: ${correctAnswers.length}/${scoreTracking.length} ${resultMessage['emoji']}',
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Text(
-                      '${assessment['assessment']}',
+                      '${resultMessage['assessment']}',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
-                  const Divider(
-                    thickness: 1.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Text(
-                      'Respostes:',
-                      style: Theme.of(context).textTheme.headlineLarge,
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Divider(
+                      thickness: 1.0,
                     ),
                   ),
+                  Text(
+                    'Respostes:',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
                   const ScoreTracking(),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Divider(
+                      thickness: 1.0,
+                    ),
+                  ),
+                  ShareSection(
+                    correctAnswersCount: correctAnswers.length,
+                    answersCount: scoreTracking.length,
+                  ),
                 ],
               )),
         ),
