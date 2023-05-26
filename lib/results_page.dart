@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vtv_app/app_state.dart';
 import 'package:vtv_app/datamodel.dart';
+import 'package:vtv_app/question_wrapper.dart';
 
 class ResultatsPage extends StatelessWidget {
   const ResultatsPage({super.key});
@@ -43,13 +44,13 @@ class ResultatsPage extends StatelessWidget {
                     thickness: 1.0,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Text(
-                      'Revisió de les respostes:',
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      'Respostes:',
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
                   ),
-                  ...generateResults(preguntes, scoreTracking),
+                  const ScoreTracking(),
                 ],
               )),
         ),
